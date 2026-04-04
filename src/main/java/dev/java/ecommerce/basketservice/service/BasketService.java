@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -84,6 +85,16 @@ public class BasketService {
                     .build());
         });
         return productModels;
+    }
+
+    public List<BasketModel> findBasketByStatus(Status status) {
+        List<BasketModel> statusBasket = basketRepository.getByStatus(status);
+
+        List<BasketModel> filtrarCarinho = statusBasket.stream()
+                .filter(basketModel -> basketModel.getStatus().equals(status))
+                .toList();
+
+        return filtrarCarinho;
     }
 
 

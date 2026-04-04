@@ -1,5 +1,6 @@
 package dev.java.ecommerce.basketservice.controller;
 
+import dev.java.ecommerce.basketservice.enums.Status;
 import dev.java.ecommerce.basketservice.model.BasketModel;
 import dev.java.ecommerce.basketservice.records.request.BasketRequest;
 import dev.java.ecommerce.basketservice.records.request.PaymentRequest;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/basket")
@@ -50,6 +53,18 @@ public class BasketController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Carinho não existe nos nossos registros");
         }
+    }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<BasketModel>> findBasketByStatus(@PathVariable Status status) {
+        List<BasketModel> carrinho = service.findBasketByStatus(status);
+
+        if (carrinho.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(carrinho);
+        }
+
     }
 
 }
