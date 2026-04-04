@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: basket-service
+
+  data:
+    mongodb:
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
+      database: ${MONGO_DATABASE}
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+
+  cache:
+    redis:
+      time-to-live: 60000
+
+basket:
+  client:
+    platzi: ${PLATZI_API_URL}
