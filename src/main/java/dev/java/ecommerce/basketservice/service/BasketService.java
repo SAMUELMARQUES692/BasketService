@@ -1,5 +1,6 @@
 package dev.java.ecommerce.basketservice.service;
 
+import dev.java.ecommerce.basketservice.enums.PaymentMethod;
 import dev.java.ecommerce.basketservice.enums.Status;
 import dev.java.ecommerce.basketservice.exception.BusinessException;
 import dev.java.ecommerce.basketservice.exception.DataNotFoundException;
@@ -95,6 +96,15 @@ public class BasketService {
                 .toList();
 
         return filtrarCarinho;
+    }
+
+    public List<BasketModel> filterByPaymentBasket(PaymentMethod paymentMethod) {
+        List<BasketModel> formaDePagamento = basketRepository.getByPaymentMethod(paymentMethod);
+
+        List<BasketModel> filtrarPagamentos = formaDePagamento.stream()
+                .filter(formPay -> formPay.getPaymentMethod().equals(paymentMethod))
+                .toList();
+        return filtrarPagamentos;
     }
 
 

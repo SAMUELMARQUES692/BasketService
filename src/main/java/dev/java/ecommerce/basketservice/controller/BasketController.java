@@ -1,5 +1,6 @@
 package dev.java.ecommerce.basketservice.controller;
 
+import dev.java.ecommerce.basketservice.enums.PaymentMethod;
 import dev.java.ecommerce.basketservice.enums.Status;
 import dev.java.ecommerce.basketservice.model.BasketModel;
 import dev.java.ecommerce.basketservice.records.request.BasketRequest;
@@ -56,13 +57,27 @@ public class BasketController {
     }
 
     @GetMapping("/status/{status}")
-    public ResponseEntity<List<BasketModel>> findBasketByStatus(@PathVariable Status status) {
+    public ResponseEntity<?> findBasketByStatus(@PathVariable Status status) {
         List<BasketModel> carrinho = service.findBasketByStatus(status);
 
         if (carrinho.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Não há nenhum carrinho com o status de " + status);
         } else {
             return ResponseEntity.ok(carrinho);
+        }
+
+    }
+
+    @GetMapping("/payment/{paymentMethod}")
+    public ResponseEntity<?> filterByPaymentBasket(@PathVariable PaymentMethod paymentMethod) {
+        List<BasketModel> formaDePagamento = service.filterByPaymentBasket(paymentMethod);
+
+        if (formaDePagamento.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Tipo de pagamento não encontrado");
+        } else {
+            return ResponseEntity.ok(formaDePagamento);
         }
 
     }
