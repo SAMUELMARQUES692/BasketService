@@ -107,5 +107,9 @@ public class BasketService {
         return filtrarPagamentos;
     }
 
+    public List<BasketModel> getAll() {
+        return basketRepository.findAll();
+    }
+
 
 }

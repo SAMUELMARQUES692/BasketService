@@ -82,4 +82,10 @@ public class BasketController {
 
     }
 
+    @GetMapping
+    public ResponseEntity<List<BasketModel>> getAll() {
+        List<BasketModel> buscarTudo = service.getAll();
+        return ResponseEntity.ok(buscarTudo);
+    }
+
 }
